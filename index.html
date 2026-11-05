@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#30251f">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>कुछ अल्फ़ाज़ — शायरी की किताब</title>
+<style>
+:root{--ink:#30251f;--muted:#806f60;--paper:#fffaf1;--edge:#e7d9c5;--gold:#b28a58;--bg:#eee7dc}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Georgia,"Noto Serif Devanagari",serif}
+header{background:var(--ink);color:#f8ead5;padding:22px 16px 18px;text-align:center}
+header .eyebrow{font:11px system-ui;letter-spacing:3px;text-transform:uppercase;color:#d8bd99}
+h1{font-size:clamp(30px,8vw,46px);font-weight:500;margin:8px 0 4px}header p{color:#ddcbb2;margin:0;font-size:14px}
+main{max-width:760px;margin:18px auto;padding:0 12px}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+input,select,button{font:inherit;border:1px solid var(--edge);border-radius:12px;padding:10px 12px;background:#fffdf8;color:var(--ink)}
+input{flex:1;min-width:150px}button{cursor:pointer}button:active{transform:scale(.98)}
+.book{background:var(--paper);border:1px solid var(--edge);border-radius:18px;box-shadow:0 8px 25px #49331b18;overflow:hidden}
+.booktop{padding:12px 18px;border-bottom:1px solid var(--edge);display:flex;justify-content:space-between;color:var(--muted);font:12px system-ui}
+.page{min-height:350px;padding:35px 24px 28px;display:flex;flex-direction:column;justify-content:center;text-align:center}
+.kicker{font:12px system-ui;letter-spacing:1.5px;color:var(--gold);text-transform:uppercase}
+h2{font-size:28px;font-weight:500;margin:12px 0 4px}.byline{color:var(--muted);font-size:14px;margin-bottom:26px}
+.verse{white-space:pre-line;font-size:clamp(20px,5vw,25px);line-height:1.9;margin:0 auto;max-width:540px}
+.meaning{background:#f4ecdf;border-radius:12px;padding:13px 15px;text-align:left;margin:24px auto 0;max-width:540px;font-size:14px;line-height:1.7}
+.meaning b{display:block;font:12px system-ui;color:var(--gold);margin-bottom:4px}
+.note{font:11px system-ui;color:var(--muted);margin-top:14px}
+.controls{display:flex;justify-content:space-between;gap:8px;padding:12px 16px;border-top:1px solid var(--edge)}
+.controls button{background:#fffaf1}.controls .primary{background:var(--ink);color:#fff4e5;border-color:var(--ink)}
+.contents{margin-top:14px;background:var(--paper);border:1px solid var(--edge);border-radius:16px;padding:16px}
+.contents h3{margin:0 0 10px;font-size:18px;font-weight:500}
+.list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.item{text-align:left;background:#fffdf8;display:flex;align-items:center;gap:8px;font-size:14px}
+.item small{display:block;color:var(--muted);font:11px system-ui}
+.item.active{border-color:var(--gold);background:#f5ecdf}
+.footer{text-align:center;color:var(--muted);font:12px system-ui;padding:18px}
+.hidden{display:none!important}
+@media(max-width:430px){.page{padding:28px 17px;min-height:380px}.list{grid-template-columns:1fr}.controls button{padding:9px 10px;font-size:13px}}
+</style>
+</head>
+<body>
+<header>
+ <div class="eyebrow">एक अदबी सफ़र</div>
+ <h1>कुछ अल्फ़ाज़...</h1>
+ <p>शायरी की एक छोटी-सी दुनिया</p>
+</header>
+<main>
+ <div class="toolbar">
+  <input id="search" type="search" placeholder="शायर या विषय खोजें…">
+  <select id="filter" aria-label="विषय चुनें"><option value="all">सभी विषय</option><option>मोहब्बत</option><option>ज़िंदगी</option><option>तन्हाई</option><option>उम्मीद</option><option>शायर परिचय</option></select>
+ </div>
+ <section class="book">
+  <div class="booktop"><span>📖 कुछ अल्फ़ाज़</span><span id="count">पन्ना 1</span></div>
+  <article class="page">
+   <div class="kicker" id="category">पेश-ए-ख़िदमत</div>
+   <h2 id="title">शायरी का सफ़र</h2>
+   <div class="byline" id="poet">इस किताब के नाम</div>
+   <p class="verse" id="verse">कुछ बातें लफ़्ज़ों में ढल जाती हैं,\nकुछ ख़ामोशियाँ शायरी बन जाती हैं।</p>
+   <div class="meaning" id="meaning"><b>आसान मतलब</b><span>हर एहसास को कहने के लिए आवाज़ ज़रूरी नहीं।</span></div>
+   <div class="note" id="note">इस किताब के लिए मौलिक रचना</div>
+  </article>
+  <div class="controls">
+   <button id="prev">← पिछला</button><button id="save">☆ पसंदीदा</button><button class="primary" id="next">अगला →</button>
+  </div>
+ </section>
+ <section class="contents">
+  <h3>किताब के पन्ने <span id="savedCount" style="float:right;color:#806f60;font:12px system-ui">0 पसंदीदा</span></h3>
+  <div class="list" id="list"></div>
+ </section>
+ <section class="contents" id="favoritesBox">
+  <h3>मेरी पसंदीदा शायरी</h3><div id="favorites" style="font-size:14px;color:#806f60">अभी कोई पन्ना सेव नहीं है।</div>
+ </section>
+ <div class="footer">लफ़्ज़ों को आराम से पढ़िए, और अपने पसंदीदा पन्ने सँभालकर रखिए।</div>
+</main>
+<script>
+const pages=[
+{cat:"पेश-ए-ख़िदमत",tag:"उम्मीद",title:"शायरी का सफ़र",poet:"इस किताब के नाम",verse:"कुछ बातें लफ़्ज़ों में ढल जाती हैं,\nकुछ ख़ामोशियाँ शायरी बन जाती हैं।",meaning:"हर एहसास को कहने के लिए आवाज़ ज़रूरी नहीं; कभी-कभी ख़ामोशी भी बहुत कुछ कहती है।",note:"इस किताब के लिए मौलिक रचना"},
+{cat:"ख़ास शायर",tag:"शायर परिचय",title:"बशीर बद्र साहब",poet:"एक संक्षिप्त परिचय",verse:"बशीर बद्र आधुनिक उर्दू ग़ज़ल के बेहद सम्मानित शायरों में गिने जाते हैं। उनकी शायरी में मोहब्बत, रिश्तों, यादों और रोज़मर्रा की ज़िंदगी के एहसास सरल मगर असरदार अंदाज़ में आते हैं।",meaning:"इस किताब में उनका छोटा-सा विशेष परिचय और उनकी शायरी के अंदाज़ पर चर्चा होगी। उनकी मूल रचनाएँ कॉपीराइट के कारण यहाँ पूरी तरह पुनर्प्रकाशित नहीं की गई हैं।",note:"परिचय — मूल शायरी का उद्धरण नहीं"},
+{cat:"क्लासिकल शायर",tag:"शायर परिचय",title:"मिर्ज़ा ग़ालिब",poet:"उर्दू अदब का अहम नाम",verse:"ग़ालिब की शायरी में सवाल, तजुर्बा, इश्क़ और इंसानी फ़ितरत की गहरी पड़ताल मिलती है।",meaning:"उनकी रचनाएँ अपने विचारों की गहराई और भाषा की नज़ाकत के लिए जानी जाती हैं।",note:"परिचय — मूल शायरी का उद्धरण नहीं"},
+{cat:"क्लासिकल शायर",tag:"शायर परिचय",title:"मीर तक़ी मीर",poet:"इश्क़ और एहसास के शायर",verse:"मीर की शायरी में दिल की नर्मी, जुदाई और इंसानी भावनाओं की सादगी दिखाई देती है।",meaning:"उनकी भाषा सीधी लग सकती है, लेकिन उसमें भावनाओं की गहराई होती है।",note:"परिचय — मूल शायरी का उद्धरण नहीं"},
+{cat:"मोहब्बत",tag:"मोहब्बत",title:"एक मुलाक़ात",poet:"मौलिक शायरी",verse:"वो मिला भी तो इक ख़्वाब की तरह,\nयाद रह गया खुली किताब की तरह।",meaning:"कुछ मुलाक़ातें छोटी होती हैं, मगर उनकी यादें लंबे समय तक साथ रहती हैं।",note:"मौलिक रचना"},
+{cat:"ज़िंदगी",tag:"ज़िंदगी",title:"रास्ते",poet:"मौलिक शायरी",verse:"रास्ते मुश्किल हों तो हौसला रखना,\nहर नई सुबह से एक रिश्ता रखना।",meaning:"मुश्किल समय में भी उम्मीद और कोशिश जारी रखनी चाहिए।",note:"मौलिक रचना"},
+{cat:"तन्हाई",tag:"तन्हाई",title:"ख़ामोशी",poet:"मौलिक शायरी",verse:"भीड़ में भी कुछ लोग तन्हा रहते हैं,\nदिल की बातें दिल में ही रखते हैं।",meaning:"कभी-कभी इंसान के मन में बहुत कुछ होता है, जिसे वह कह नहीं पाता।",note:"मौलिक रचना"},
+{cat:"उम्मीद",tag:"उम्मीद",title:"नई सुबह",poet:"मौलिक शायरी",verse:"रात से कहना, ठहर के गुज़रना,\nहमने सुबह के लिए ख़्वाब बुने हैं।",meaning:"बुरा वक़्त हमेशा नहीं रहता; बेहतर दिनों की उम्मीद रखी जा सकती है।",note:"मौलिक रचना"}
+];
+let index=0;let saved=JSON.parse(localStorage.getItem("kuchAlfaazSaved")||"[]");
+const $=id=>document.getElementById(id);
+function render(){
+ const p=pages[index];$("category").textContent=p.cat;$("title").textContent=p.title;$("poet").textContent=p.poet;$("verse").textContent=p.verse;$("meaning").querySelector("span").textContent=p.meaning;$("note").textContent=p.note;$("count").textContent=`पन्ना ${index+1} / ${pages.length}`;
+ $("prev").disabled=index===0;$("next").disabled=index===pages.length-1;$("save").textContent=saved.includes(index)?"★ सेव है":"☆ पसंदीदा";
+ $("savedCount").textContent=`${saved.length} पसंदीदा`;renderList();renderFavorites();
+}
+function renderList(){
+ const q=$("search").value.trim().toLowerCase(),f=$("filter").value;
+ $("list").innerHTML="";
+ pages.forEach((p,i)=>{if((f==="all"||p.tag===f)&&(!q||(p.title+p.poet+p.verse+p.meaning).toLowerCase().includes(q))){
+  const b=document.createElement("button");b.className="item"+(i===index?" active":"");b.innerHTML=`<span>${String(i+1).padStart(2,"0")}</span><span>${p.title}<small>${p.poet}</small></span>`;b.onclick=()=>{index=i;render();window.scrollTo({top:0,behavior:"smooth"})};$("list").appendChild(b);
+ }});
+ if(!$("list").children.length)$("list").textContent="इस खोज में कोई पन्ना नहीं मिला।";
+}
+function renderFavorites(){
+ const box=$("favorites");box.innerHTML="";
+ if(!saved.length){box.textContent="अभी कोई पन्ना सेव नहीं है।";return}
+ saved.forEach(i=>{const b=document.createElement("button");b.className="item";b.style.margin="4px";b.textContent=pages[i].title;b.onclick=()=>{index=i;render();window.scrollTo({top:0,behavior:"smooth"})};box.appendChild(b)});
+}
+$("prev").onclick=()=>{if(index>0){index--;render()}};
+$("next").onclick=()=>{if(index<pages.length-1){index++;render()}};
+$("save").onclick=()=>{saved=saved.includes(index)?saved.filter(x=>x!==index):[...saved,index];localStorage.setItem("kuchAlfaazSaved",JSON.stringify(saved));render()};
+$("search").addEventListener("input",renderList);$("filter").addEventListener("change",renderList);
+render();
+</script>
+<script>if ("serviceWorker" in navigator) { window.addEventListener("load", () => navigator.serviceWorker.register("./service-worker.js").catch(()=>{})); }</script>
+</body>
+</html>
